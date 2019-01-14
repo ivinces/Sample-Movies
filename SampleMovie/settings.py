@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.movies',
     'django_seed',
+
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'SampleMovie',
         'USER': 'postgres',
-        'PASSWORD': 'primavera26',
+        'PASSWORD': 'dayanara10',
         'HOST': 'localhost',
         'PORT': 5432,
     }
@@ -126,4 +127,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS=(os.path.join(BASE_DIR,'static'),)
-LOGIN_REDIRECT_URL=reverse_lazy('usuario_listar') 
+LOGIN_REDIRECT_URL=reverse_lazy('peliculas_listar') 

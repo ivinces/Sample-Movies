@@ -25,3 +25,4 @@ class Registro(models.Model):
     pelicula = models.ForeignKey(Pelicula, null=True, blank=True, on_delete=models.CASCADE)
     fecha = models.DateField()
     hora = models.TimeField()
+
