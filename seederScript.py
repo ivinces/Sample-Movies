@@ -34,12 +34,13 @@ seeder.add_entity(Pelicula, 50, {
     'titulo': lambda x: seeder.faker.word(),
 	'director': lambda x: seeder.faker.name(),
     'reparto' : lambda x: seeder.faker.word(),
-    'calificacion': lambda x: random.randint(1,10),
+    
 })
 
 seeder.add_entity(Registro, 50, {
 	'fecha': lambda x: seeder.faker.date(),
 	'hora': lambda x: seeder.faker.time(),
+    'calificacion': lambda x: random.randint(1,5),
 	})
 
 seeder.execute()

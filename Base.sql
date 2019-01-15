@@ -20,7 +20,6 @@ CREATE TABLE movies_pelicula(
 	titulo varchar(50),
 	director varchar(50),
 	reparto varchar(300),
-	calificacion int,
 	tipoplan_id int NOT NULL,
 	FOREIGN KEY(tipoplan_id) REFERENCES movies_planes(id)
 );
@@ -31,22 +30,24 @@ CREATE TABLE movies_registro(
 	pelicula_id int,
 	fecha date,
 	hora time,
+	calificacion int,
 	FOREIGN KEY(cliente_id) REFERENCES movies_persona(id),
 	FOREIGN KEY(pelicula_id) REFERENCES movies_pelicula(id)
 );
 
-create function pelisvistas2()
-returns table(id int,titulo varchar,director varchar,reparto varchar,calificacion int,repetidas bigint)
-as $$
-	SELECT movies_pelicula.id,titulo,director,reparto,calificacion, count(*) FROM movies_registro,movies_pelicula WHERE movies_pelicula.id=movies_registro.pelicula_id group by movies_pelicula.id  ORDER BY count DESC FETCH FIRST 10 ROWS ONLY
-$$ language sql;
+SELECT * FROM movies_registro
+SELECT * FROM movies_persona
+SELECT * FROM movies_pelicula
 
-SELECT * FROM pelisvistas2();
 
 create function listadopeliculas()
 returns table(id int,titulo varchar,usuario varchar,calificacion int)
 as $$
-	SELECT movies_pelicula.id,titulo,movies_persona.nombre,calificacion FROM movies_registro,movies_persona,movies_pelicula WHERE movies_pelicula.id=movies_registro.pelicula_id AND movies_persona.id=movies_registro.cliente_id
+	SELECT movies_registro.pelicula_id,movies_pelicula.titulo,movies_persona.nombre,calificacion FROM movies_registro,movies_persona,movies_pelicula WHERE movies_persona.id=movies_registro.cliente_id AND movies_pelicula.id=movies_registro.pelicula_id ORDER BY movies_pelicula.id
 $$ language sql;
 
+DROP FUNCTION listadopeliculas()
+SELECT * FROM listadopeliculas()
+
+SELECT * FROM listadopeliculas()
 

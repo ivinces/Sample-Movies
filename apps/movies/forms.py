@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Pelicula,Persona
+from .models import Registro
+from .controller import ListPerson
 
 class RegistroForm(UserCreationForm):
 	class Meta:
@@ -22,21 +23,16 @@ class RegistroForm(UserCreationForm):
 
 class CalificacionForm(forms.ModelForm):
 
-	titulo= forms.ModelChoiceField(queryset=Pelicula.objects.values_list("titulo",flat=True).distinct())
-	usuario= forms.ModelChoiceField(queryset=Persona.objects.values_list("nombre",flat=True).distinct())
-	calificacion= forms.ModelChoiceField(queryset=Pelicula.objects.values_list("calificacion",flat=True).distinct())
+	usuario= forms.ModelChoiceField(queryset=Registro.objects.values_list("cliente",flat=True).distinct())
+	titulo= forms.ModelChoiceField(queryset=Registro.objects.values_list("pelicula",flat=True).distinct())
+	calificacion= forms.ModelChoiceField(queryset=Registro.objects.values_list("calificacion",flat=True).distinct())
 
 	class Meta:
-		model=Pelicula
+		model=Registro
 		fields = [
 			"titulo",
-			
+			"usuario",			
 			"calificacion"
 		]
-		model=Persona
-		fields = [
-			
-			"usuario"
-			
-		]
+		
 

@@ -27,3 +27,19 @@ class PeliculasFormView(View):
 	def get(self,request):
 		form= self.form_class(None)
 		return render(request,self.template_name,{"form":form})
+
+def edit(request, id): 
+
+  post = get_object_or_404(Post, id=id) 
+  if request.method == "POST": 
+    # update DB 
+    form = CalificacionForm(request.POST, instance=post) 
+    if form.is_valid(): 
+      post = form.save(commit=False) 
+      post.save() 
+      return redirect('movies_index') 
+  else: 
+    # show the form 
+    form = PostForm(instance=post)    
+  context = { 'form': form } 
+  return render(request, 'actualizar.html', context) 
