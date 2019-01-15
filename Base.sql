@@ -1,4 +1,4 @@
-﻿CREATE TABLE movies_planes(
+CREATE TABLE movies_planes(
 	id serial NOT NULL PRIMARY KEY,
 	tipoplan varchar(30),
 	valor int
@@ -35,41 +35,6 @@ CREATE TABLE movies_registro(
 	FOREIGN KEY(pelicula_id) REFERENCES movies_pelicula(id)
 );
 
-DROP TABLE movies_planes;
-Drop Table movies_persona, movies_planes, movies_pelicula, movies_registro;
-ALTER TABLE Planes RENAME movies_planes;
-
-SELECT * FROM movies_pelicula;
-
-SELECT id,titulo,director,reparto,calificacion FROM movies_pelicula ORDER BY calificacion DESC FETCH FIRST 10 ROWS ONLY;
-
-CREATE PROCEDURE pelistop()
-LANGUAGE SQL
-AS $$
-SELECT id,titulo,director,reparto,calificacion FROM movies_pelicula ORDER BY calificacion DESC FETCH FIRST 10 ROWS ONLY
-$$;
-
-
-create function pelistop()
-returns table(id int,titulo varchar,director varchar,reparto varchar,calificacion int)
-as $$
-  SELECT id,titulo,director,reparto,calificacion FROM movies_pelicula ORDER BY calificacion DESC FETCH FIRST 10 ROWS ONLY
-$$ language sql;
-
-SELECT * FROM pelistop();
-
-SELECT movies_pelicula.id,titulo,director,reparto,calificacion,count(*) FROM movies_registro,movies_pelicula WHERE movies_pelicula.id=movies_registro.pelicula_id group by movies_pelicula.id  ORDER BY count DESC FETCH FIRST 10 ROWS ONLY
-
-SELECT movies_pelicula.id,titulo,director,reparto,calificacion FROM movies_registro,movies_pelicula WHERE movies_pelicula.id=movies_registro.pelicula_id group by movies_pelicula.id  ORDER BY count(*) DESC FETCH FIRST 10 ROWS ONLY
-
-create function pelisvistas()
-returns table(id int,titulo varchar,director varchar,reparto varchar,calificacion int)
-as $$
-	SELECT movies_pelicula.id,titulo,director,reparto,calificacion FROM movies_registro,movies_pelicula WHERE movies_pelicula.id=movies_registro.pelicula_id group by movies_pelicula.id  ORDER BY count(*) DESC FETCH FIRST 10 ROWS ONLY
-$$ language sql;
-
-SELECT * FROM pelisvistas();
-
 create function pelisvistas2()
 returns table(id int,titulo varchar,director varchar,reparto varchar,calificacion int,repetidas bigint)
 as $$
@@ -77,3 +42,11 @@ as $$
 $$ language sql;
 
 SELECT * FROM pelisvistas2();
+
+create function listadopeliculas()
+returns table(id int,titulo varchar,usuario varchar,calificacion int)
+as $$
+	SELECT movies_pelicula.id,titulo,movies_persona.nombre,calificacion FROM movies_registro,movies_persona,movies_pelicula WHERE movies_pelicula.id=movies_registro.pelicula_id AND movies_persona.id=movies_registro.cliente_id
+$$ language sql;
+
+
