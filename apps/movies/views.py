@@ -37,3 +37,11 @@ def edit(request, id):
 
   context = { 'form': form }
   return render(request, 'actualizar.html', context) 
+
+def delete(request, id): 
+
+  post = get_object_or_404(Registro, id=id) 
+
+  post.delete() 
+
+  return redirect('peliculas_listar')

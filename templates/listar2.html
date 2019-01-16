@@ -27,7 +27,8 @@
 			<td>{{ pelicula.titulo }}</td>
 			<td>{{ pelicula.usuario }}</td>
 			<td>{{ pelicula.calificacion }}</td>
-			<td> <a href="{% url 'actualizar-model' id=pelicula.id %}">Edit</a>   </td>			
+			<td> <a href="{% url 'actualizar-model' id=pelicula.id %}">Edit</a>   </td>
+			<td> <a href="{% url 'borrar-model' id=pelicula.id %}">Delete</a> </td>		
 		</tr>
 		{% endfor %}
 
