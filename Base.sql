@@ -43,11 +43,11 @@ SELECT * FROM movies_pelicula
 create function listadopeliculas()
 returns table(id int,titulo varchar,usuario varchar,calificacion int)
 as $$
-	SELECT movies_registro.pelicula_id,movies_pelicula.titulo,movies_persona.nombre,calificacion FROM movies_registro,movies_persona,movies_pelicula WHERE movies_persona.id=movies_registro.cliente_id AND movies_pelicula.id=movies_registro.pelicula_id ORDER BY movies_pelicula.id
+	SELECT movies_registro.id,movies_pelicula.titulo,movies_persona.nombre,calificacion FROM movies_registro,movies_persona,movies_pelicula WHERE movies_persona.id=movies_registro.cliente_id AND movies_pelicula.id=movies_registro.pelicula_id ORDER BY movies_registro.id
 $$ language sql;
 
 DROP FUNCTION listadopeliculas()
 SELECT * FROM listadopeliculas()
-
+SELECT titulo, usuario from listadopeliculas()
 SELECT * FROM listadopeliculas()
 
