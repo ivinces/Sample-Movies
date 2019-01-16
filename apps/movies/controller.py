@@ -7,4 +7,3 @@ def PeliculasVistas():
 def ListadoPeliculas():
 	model=Registro.objects.raw('SELECT * FROM listadopeliculas()')
 	return model
-
