@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.movies',
     'django_seed',
+    'principal'
 
 ]
 
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'SampleMovie.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR,'templates'),os.path.join(BASE_DIR,'principal/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,8 +82,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'SampleMovie',
-        'USER': 'postgres',
-        'PASSWORD': 'primavera26',
+        'USER': 'django_windows',
+        'PASSWORD': '1997',
         'HOST': 'localhost',
         'PORT': 5432,
     }
@@ -127,4 +128,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS=(os.path.join(BASE_DIR,'static'),)
-LOGIN_REDIRECT_URL=reverse_lazy('peliculas_listar') 
+#LOGIN_REDIRECT_URL=reverse_lazy('peliculas_listar') 
+LOGIN_REDIRECT_URL = '/'

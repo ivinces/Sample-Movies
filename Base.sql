@@ -51,3 +51,41 @@ SELECT * FROM listadopeliculas()
 SELECT titulo, usuario from listadopeliculas()
 SELECT * FROM listadopeliculas()
 
+--nuevos procedures
+
+create function listadousuarios(identificador int)
+returns table(id int)
+as $$
+SELECT mp.id FROM listadopeliculas() lp, movies_persona mp WHERE lp.usuario=mp.nombre AND lp.id=identificador
+$$ language sql;
+
+create function listadopelis(identificador int)
+returns table(id int)
+as $$
+SELECT mp.id FROM listadopeliculas() lp, movies_pelicula mp WHERE lp.titulo=mp.titulo AND lp.id=identificador
+$$ language sql;
+
+create function listadousuariospelicula(identificador int)
+returns table(id int, nombre varchar, apellido varchar)
+as $$
+SELECT mp.id, mp.nombre, mp.apellido FROM movies_persona mp, movies_registro mr WHERE mr.cliente_id=mp.id AND mr.pelicula_id=(SELECT id FROM movies_persona WHERE id=identificador)
+$$ language sql;
+
+create function listadousuariospelicula2(identificador int)
+returns table(id int, nombre varchar, apellido varchar)
+as $$
+SELECT mp.id, mp.nombre, mp.apellido FROM movies_persona mp, movies_registro mr WHERE mr.cliente_id=mp.id AND mr.pelicula_id=(SELECT * FROM listadopelis(identificador))
+$$ language sql;
+
+create function listadopeliculausuarios(identificador int)
+returns table(id int, titulo varchar)
+as $$
+SELECT mp.id, mp.titulo FROM movies_pelicula mp, movies_registro mr WHERE mr.pelicula_id=mp.id AND mr.cliente_id=(SELECT * FROM listadousuarios(identificador))
+$$ language sql;
+
+create function listadopeliculausuarios2(identificador int)
+returns table(id int, titulo varchar)
+as $$
+SELECT mp.id, mp.titulo FROM movies_pelicula mp, movies_registro mr WHERE mr.pelicula_id=mp.id AND mr.cliente_id=(SELECT id FROM movies_pelicula WHERE id=identificador)
+$$ language sql;
+

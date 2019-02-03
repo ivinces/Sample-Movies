@@ -17,11 +17,18 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include 
 from django.contrib.auth.views import LoginView
+from django.conf import settings
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
 	url('movies/',include('apps.movies.urls')), 
 
-	url('',LoginView.as_view(template_name='login.html'),name='login_usuario'),
+	#url('',LoginView.as_view(template_name='login.html'),name='login_usuario'),
+
+    url(r'', include('principal.urls')),  
+
+    url(r'^logout/', LogoutView.as_view(template_name='main/main_base.html'), name='logout'),
 ]

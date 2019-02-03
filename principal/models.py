@@ -1,3 +1,4 @@
+# Create your models here.
 from __future__ import unicode_literals
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -27,4 +28,3 @@ class Registro(models.Model):
     calificacion = models.IntegerField(default=1,validators=[MaxValueValidator(5),MinValueValidator(1)])
     fecha = models.DateField()
     hora = models.TimeField()
-

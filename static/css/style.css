@@ -1,0 +1,6 @@
+input{
+	pointer-events: none; 
+}
+select{
+	pointer-events: none; 
+}
